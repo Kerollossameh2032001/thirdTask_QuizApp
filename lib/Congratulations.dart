@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quizapp/Home.dart';
 import 'Home.dart';
 import 'questionScreen.dart';
 
@@ -9,6 +8,7 @@ class Congratulation extends StatefulWidget {
   @override
   _CongratulationState createState() => _CongratulationState();
 }
+
 class _CongratulationState extends State<Congratulation> {
   var str = "";
   @override
@@ -20,7 +20,7 @@ class _CongratulationState extends State<Congratulation> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/class.jpg'),
-               // NetworkImage('https://wallpapercave.com/wp/wp5586589.jpg'),
+                // NetworkImage('https://wallpapercave.com/wp/wp5586589.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -30,7 +30,8 @@ class _CongratulationState extends State<Congratulation> {
             margin: EdgeInsets.only(top: 40.0),
             child: Column(
               children: [
-                Text('Congratulations.... !!',
+                Text(
+                  'Congratulations.... !!',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 30,
@@ -41,31 +42,51 @@ class _CongratulationState extends State<Congratulation> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.smiley, size: 30.0,),
-                    Icon(CupertinoIcons.smiley, size: 30.0,),
-                    Icon(CupertinoIcons.smiley, size: 30.0,),
-                    Icon(CupertinoIcons.smiley, size: 30.0,),
-                    Icon(CupertinoIcons.smiley, size: 30.0,),
+                    Icon(
+                      CupertinoIcons.smiley,
+                      size: 30.0,
+                    ),
+                    Icon(
+                      CupertinoIcons.smiley,
+                      size: 30.0,
+                    ),
+                    Icon(
+                      CupertinoIcons.smiley,
+                      size: 30.0,
+                    ),
+                    Icon(
+                      CupertinoIcons.smiley,
+                      size: 30.0,
+                    ),
+                    Icon(
+                      CupertinoIcons.smiley,
+                      size: 30.0,
+                    ),
                   ],
                 ),
-                SizedBox(height: 40,),
-                Text("Thank you for attending this exam and good luck with other exams",
-                style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
+                SizedBox(
+                  height: 40,
                 ),
+                Text(
+                  "Thank you for attending this exam and good luck with other exams",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  ),
                 )
               ],
             ),
           ),
-          SizedBox(height: 30.0,),
+          SizedBox(
+            height: 30.0,
+          ),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
             child: Text(
-              str ,
+              str,
               style: TextStyle(
                 fontStyle: FontStyle.italic,
                 fontSize: 30,
@@ -82,9 +103,9 @@ class _CongratulationState extends State<Congratulation> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FlatButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        str = "Your Grade is $count /5" ;
+                        str = "Your Grade is $count /5";
                       });
                     },
                     color: Colors.white,
@@ -106,14 +127,14 @@ class _CongratulationState extends State<Congratulation> {
                     highlightColor: Colors.grey,
                   ),
                   FlatButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        count = 0 ;
+                        count = 0;
                       });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Home()));
+                      // if u wanna replace a screen and erase history of old screens 
+                      // u can use popUntil which will pop the screens until
+                      // it reaches a route with a decided name in ur case it's root 
+                      Navigator.popUntil(context, ModalRoute.withName("/"));
                     },
                     color: Colors.white,
                     child: Text(
