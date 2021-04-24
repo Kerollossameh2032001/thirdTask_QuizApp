@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quizapp/quiz.dart';
+import 'quiz.dart';
 import 'Congratulations.dart';
 import 'Home.dart';
 
 //int count = 0;
 
+// ignore: must_be_immutable
 class QuestionScreen extends StatefulWidget {
   int index;
   QuestionScreen(this.index);
@@ -15,10 +16,10 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-
   Quiz myQuiz = Quiz();
   bool isCorrect = false;
   bool isWrong = false;
+  bool _isDisabled = false; //is disabled state
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +28,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
         children: [
           Container(
             decoration: BoxDecoration(
+              //add bg color even if ur using an image for background so the text will appear
+              //while the image is loading
+              color: Colors.orange,
               image: DecorationImage(
                 image:
                     NetworkImage('https://wallpapercave.com/wp/wp5586589.jpg'),
@@ -61,18 +65,26 @@ class _QuestionScreenState extends State<QuestionScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         FlatButton(
-                          onPressed: () {
-                            if (myQuiz.quiz[widget.index].answer == true)
-                              setState(() {
-                                count++;
-                                isCorrect = true;
-                                isWrong = false;
-                              });
-                            else setState(() {
-                              isCorrect = false;
-                              isWrong = true;
-                            });
-                            },
+                          // this is the color for when the onPress = null aka disabled
+                          disabledColor: Colors.grey,
+                          // in flutter if u wanna disable a button u have to make onPress = null
+                          onPressed: _isDisabled
+                              ? null
+                              : () {
+                                  if (myQuiz.quiz[widget.index].answer == true)
+                                    setState(() {
+                                      count++;
+                                      isCorrect = true;
+                                      isWrong = false;
+                                    });
+                                  else
+                                    setState(() {
+                                      isCorrect = false;
+                                      isWrong = true;
+                                    });
+                                    // set disables state to true afte choosing
+                                  _isDisabled = true;
+                                },
                           color: Colors.white,
                           child: Text(
                             "True",
@@ -87,18 +99,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           highlightColor: Colors.grey,
                         ),
                         FlatButton(
-                          onPressed: () {
-                            if (myQuiz.quiz[widget.index].answer == false)
-                              setState(() {
-                                count++;
-                                isCorrect = true;
-                                isWrong = false;
-                              });
-                            else setState(() {
-                              isCorrect = false;
-                              isWrong = true;
-                            });
-                          },
+                          disabledColor: Colors.grey,
+                          onPressed: _isDisabled
+                              ? null
+                              : () {
+                                  if (myQuiz.quiz[widget.index].answer == false)
+                                    setState(() {
+                                      count++;
+                                      isCorrect = true;
+                                      isWrong = false;
+                                    });
+                                  else
+                                    setState(() {
+                                      isCorrect = false;
+                                      isWrong = true;
+                                    });
+                                  _isDisabled = true;
+                                },
                           color: Colors.white,
                           child: Text(
                             "false",
@@ -173,19 +190,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           widget.index++;
-          if(widget.index < 5) {
+          if (widget.index < 5) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => QuestionScreen(widget.index)));
-          }else{
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Congratulation()));
+          } else {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Congratulation()));
           }
           print("${widget.index}");
-          },
+        },
         backgroundColor: Colors.white,
         label: Text(
           "Next",
